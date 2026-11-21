@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AccShop - Shop Acc Game Uy Tín #1</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a12;--bg-2:#12121f;--card:#1a1a2e;--border:#2a2a45;--accent:#7c3aed;--accent-2:#06b6d4;--text:#e8e8f0;--muted:#8b8ba7;--success:#10b981}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+.container{max-width:1200px;margin:0 auto;padding:0 20px}
+.header{position:sticky;top:0;z-index:100;background:rgba(10,10,18,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.header-inner{display:flex;align-items:center;gap:24px;padding:16px 20px}
+.logo{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:900;color:var(--text);text-decoration:none;display:flex;align-items:center;gap:6px}
+.logo .accent{color:var(--accent)}
+.logo-icon{filter:drop-shadow(0 0 8px var(--accent))}
+.nav{display:flex;gap:24px;margin-left:auto}
+.nav a{color:var(--muted);text-decoration:none;font-weight:500;transition:color .2s}
+.nav a:hover{color:var(--accent-2)}
+.header-actions{display:flex;align-items:center;gap:12px}
+.search-box{position:relative}
+.search-box input{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 14px 10px 38px;color:var(--text);width:200px;font-size:14px;transition:border .2s,width .3s}
+.search-box input:focus{outline:none;border-color:var(--accent);width:240px}
+.search-icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:.6}
+.cart-btn{background:var(--accent);color:#fff;border:none;border-radius:10px;padding:10px 16px;font-size:16px;cursor:pointer;font-weight:600;display:flex;align-items:center;gap:6px;transition:transform .15s,box-shadow .2s}
+.cart-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(124,58,237,.4)}
+.cart-count{background:#fff;color:var(--accent);border-radius:50%;min-width:20px;height:20px;font-size:12px;display:grid;place-items:center;font-weight:700}
+.hero{text-align:center;padding:80px 20px 40px;position:relative}
+.hero::before{content:'';position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 50% 0%,rgba(124,58,237,.25),transparent 60%)}
+.hero-title{font-family:'Orbitron',sans-serif;font-size:clamp(32px,6vw,56px);font-weight:900;line-height:1.1}
+.gradient{background:linear-gradient(90deg,var(--accent),var(--accent-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{color:var(--muted);margin-top:16px;font-size:17px}
+.hero-stats{display:flex;justify-content:center;gap:48px;margin-top:40px;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column}
+.stat strong{font-family:'Orbitron',sans-serif;font-size:28px;color:var(--accent-2)}
+.stat span{color:var(--muted);font-size:14px}
+.filters{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:48px auto 24px;flex-wrap:wrap}
+.filter-bar{display:flex;gap:8px;flex-wrap:wrap}
+.filter-btn{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:8px 18px;border-radius:999px;cursor:pointer;font-weight:500;font-size:14px;transition:all .2s}
+.filter-btn:hover{border-color:var(--accent);color:var(--text)}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.sort-select{background:var(--card);border:1px solid var(--border);color:var(--text);padding:9px 14px;border-radius:10px;font-size:14px;cursor:pointer}
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;padding-bottom:60px}
+.product-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s;display:flex;flex-direction:column}
+.product-card:hover{transform:translateY(-6px);border-color:var(--accent);box-shadow:0 12px 30px rgba(124,58,237,.25)}
+.product-img{height:160px;display:grid;place-items:center;font-size:64px;background:linear-gradient(135deg,#1e1e3a,#2a1e4a);position:relative}
+.badge{position:absolute;top:10px;left:10px;background:var(--accent);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:999px}
+.badge.hot{background:#ef4444}
+.product-body{padding:16px;display:flex;flex-direction:column;flex:1}
+.product-name{font-size:16px;font-weight:700;margin-bottom:8px}
+.product-desc{color:var(--muted);font-size:13px;flex:1;margin-bottom:12px}
+.product-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.product-rating{color:#fbbf24;font-size:13px}
+.product-price{font-family:'Orbitron',sans-serif;font-size:18px;color:var(--accent-2);font-weight:700}
+.btn-buy{width:100%;background:linear-gradient(135deg,var(--accent),#a855f7);color:#fff;border:none;border-radius:10px;padding:12px;font-weight:700;cursor:pointer;transition:opacity .2s,transform .15s;font-size:14px}
+.btn-buy:hover{opacity:.9;transform:scale(1.02)}
+.empty-state{text-align:center;padding:60px 20px;color:var(--muted);font-size:18px}
+.section-title{text-align:center;font-family:'Orbitron',sans-serif;font-size:clamp(24px,4vw,36px);margin:60px 0 32px}
+.feature-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.feature-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px 24px;text-align:center;transition:border-color .2s,transform .2s}
+.feature-card:hover{border-color:var(--accent-2);transform:translateY(-4px)}
+.feature-icon{font-size:40px;margin-bottom:12px}
+.feature-card h3{font-size:17px;margin-bottom:8px}
+.feature-card p{color:var(--muted);font-size:14px}
+.faq-list{max-width:760px;margin:0 auto 60px;display:flex;flex-direction:column;gap:12px}
+.faq-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px 22px;transition:border-color .2s}
+.faq-item[open]{border-color:var(--accent)}
+.faq-item summary{cursor:pointer;font-weight:600;list-style:none}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::before{content:'➕ ';color:var(--accent)}
+.faq-item[open] summary::before{content:'➖ '}
+.faq-item p{color:var(--muted);margin-top:12px;font-size:14px}
+.footer{border-top:1px solid var(--border);background:var(--bg-2);margin-top:40px}
+.footer-inner{display:grid;grid-template-columns:2fr 1fr 1fr;gap:40px;padding:48px 20px;max-width:1200px;margin:0 auto}
+.footer-brand p{color:var(--muted);margin-top:8px;font-size:14px}
+.footer-col{display:flex;flex-direction:column;gap:10px}
+.footer-col h4{margin-bottom:6px;font-size:15px}
+.footer-col a{color:var(--muted);text-decoration:none;font-size:14px;transition:color .2s}
+.footer-col a:hover{color:var(--accent-2)}
+.footer-bottom{text-align:center;padding:20px;color:var(--muted);font-size:13px;border-top:1px solid var(--border)}
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .3s;z-index:200}
+.cart-overlay.show{opacity:1;pointer-events:auto}
+.cart-drawer{position:fixed;top:0;right:0;width:380px;max-width:90vw;height:100vh;background:var(--bg-2);border-left:1px solid var(--border);z-index:201;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.cart-drawer.show{transform:translateX(0)}
+.cart-header{display:flex;justify-content:space-between;align-items:center;padding:20px;border-bottom:1px solid var(--border)}
+.close-btn{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer}
+.close-btn:hover{color:var(--text)}
+.cart-items{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:12px}
+.cart-item{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px}
+.cart-item-icon{font-size:32px}
+.cart-item-info{flex:1}
+.cart-item-info h4{font-size:14px;margin-bottom:2px}
+.cart-item-info span{color:var(--accent-2);font-size:13px;font-weight:600}
+.cart-item-remove{background:none;border:none;color:#ef4444;cursor:pointer;font-size:16px}
+.cart-footer{padding:20px;border-top:1px solid var(--border)}
+.cart-total{display:flex;justify-content:space-between;margin-bottom:16px;font-size:16px}
+.cart-total strong{color:var(--accent-2);font-family:'Orbitron',sans-serif}
+.btn-checkout{width:100%;background:linear-gradient(135deg,var(--success),#059669);color:#fff;border:none;border-radius:10px;padding:14px;font-weight:700;cursor:pointer;font-size:15px}
+.btn-checkout:hover{opacity:.9}
+.cart-empty{text-align:center;color:var(--muted);padding:40px 20px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--card);border:1px solid var(--success);color:var(--text);padding:14px 24px;border-radius:12px;font-weight:500;z-index:300;opacity:0;transition:all .3s;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+@media(max-width:768px){.nav{display:none}.search-box input{width:140px}.footer-inner{grid-template-columns:1fr;gap:24px}.hero-stats{gap:24px}.filters{flex-direction:column;align-items:stretch}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="container header-inner">
+    <a href="#" class="logo"><span class="logo-icon">⚡</span><span>Acc<span class="accent">Shop</span></span></a>
+    <nav class="nav">
+      <a href="#products">Sản phẩm</a>
+      <a href="#features">Cam kết</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="header-actions">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Tìm acc...">
+        <span class="search-icon">🔍</span>
+      </div>
+      <button class="cart-btn" id="cartBtn">🛒 <span class="cart-count" id="cartCount">0</span></button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <h1 class="hero-title">Shop Acc Game <span class="gradient">Uy Tín #1</span></h1>
+    <p class="hero-sub">Giao acc tự động 24/7 • Bảo hành trọn đời • Hoàn tiền 100% nếu sai mô tả</p>
+    <div class="hero-stats">
+      <div class="stat"><strong>12.5K+</strong><span>Acc đã bán</span></div>
+      <div class="stat"><strong>4.9★</strong><span>Đánh giá</span></div>
+      <div class="stat"><strong>24/7</strong><span>Hỗ trợ</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="container filters" id="products">
+  <div class="filter-bar">
+    <button class="filter-btn active" data-cat="all">Tất cả</button>
+    <button class="filter-btn" data-cat="lienquan">Liên Quân</button>
+    <button class="filter-btn" data-cat="freefire">Free Fire</button>
+    <button class="filter-btn" data-cat="pubg">PUBG Mobile</button>
+    <button class="filter-btn" data-cat="genshin">Genshin</button>
+  </div>
+  <select id="sortSelect" class="sort-select">
+    <option value="default">Sắp xếp: Mặc định</option>
+    <option value="price-asc">Giá tăng dần</option>
+    <option value="price-desc">Giá giảm dần</option>
+    <option value="rating">Đánh giá cao</option>
+  </select>
+</section>
+
+<section class="container">
+  <div class="product-grid" id="productGrid"></div>
+  <div class="empty-state" id="emptyState" style="display:none"><p>😢 Không tìm thấy acc nào phù hợp</p></div>
+</section>
+
+<section class="features container" id="features">
+  <h2 class="section-title">Tại sao chọn <span class="gradient">AccShop</span>?</h2>
+  <div class="feature-grid">
+    <div class="feature-card"><div class="feature-icon">⚡</div><h3>Giao acc tự động</h3><p>Nhận acc ngay sau khi thanh toán, không cần chờ đợi.</p></div>
+    <div class="feature-card"><div class="feature-icon">🛡️</div><h3>Bảo hành trọn đời</h3><p>Hỗ trợ đổi/hoàn nếu acc có vấn đề trong suốt thời gian sử dụng.</p></div>
+    <div class="feature-card"><div class="feature-icon">💯</div><h3>Hoàn tiền 100%</h3><p>Acc sai mô tả? Hoàn tiền ngay lập tức, không cần lý do.</p></div>
+    <div class="feature-card"><div class="feature-icon">🎧</div><h3>Hỗ trợ 24/7</h3><p>Đội ngũ CSKH luôn online, phản hồi trong 5 phút.</p></div>
+  </div>
+</section>
+
+<section class="container faq" id="faq">
+  <h2 class="section-title">Câu hỏi <span class="gradient">thường gặp</span></h2>
+  <div class="faq-list">
+    <details class="faq-item"><summary>Mua acc có an toàn không?</summary><p>100% an toàn. Mọi acc đều được kiểm duyệt kỹ trước khi đăng bán, cam kết không bị thu hồi.</p></details>
+    <details class="faq-item"><summary>Tôi nhận acc bằng cách nào?</summary><p>Sau khi thanh toán, hệ thống tự động gửi thông tin acc qua email và hiển thị trên màn hình.</p></details>
+    <details class="faq-item"><summary>Có được đổi acc không?</summary><p>Có. Nếu acc không đúng mô tả, bạn được đổi acc khác hoặc hoàn tiền 100% trong 24h.</p></details>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand"><span class="logo-icon">⚡</span> <strong>AccShop</strong><p>Shop acc game uy tín hàng đầu Việt Nam.</p></div>
+    <div class="footer-col"><h4>Liên kết</h4><a href="#products">Sản phẩm</a><a href="#features">Cam kết</a><a href="#faq">FAQ</a></div>
+    <div class="footer-col"><h4>Liên hệ</h4><a href="#">📧 support@accshop.vn</a><a href="#">💬 Zalo: 0123 456 789</a><a href="#">📘 Facebook</a></div>
+  </div>
+  <div class="footer-bottom">© 2026 AccShop. All rights reserved.</div>
+</footer>
+
+<div class="cart-overlay" id="cartOverlay"></div>
+<aside class="cart-drawer" id="cartDrawer">
+  <div class="cart-header"><h3>🛒 Giỏ hàng</h3><button class="close-btn" id="closeCart">✕</button></div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-footer">
+    <div class="cart-total">Tổng: <strong id="cartTotal">0đ</strong></div>
+    <button class="btn-checkout" id="checkoutBtn">Thanh toán</button>
+  </div>
+</aside>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const products=[
+{id:1,name:'Acc Liên Quân Cao Thủ',cat:'lienquan',icon:'⚔️',price:250000,rating:4.9,desc:'Rank Cao Thủ, 120 skin, full tướng',badge:'HOT'},
+{id:2,name:'Acc Liên Quân Tinh Anh',cat:'lienquan',icon:'🗡️',price:120000,rating:4.7,desc:'Rank Tinh Anh, 60 skin, 80 tướng',badge:''},
+{id:3,name:'Acc Free Fire Kim Cương',cat:'freefire',icon:'🔥',price:180000,rating:4.8,desc:'Rank Kim Cương, 50 skin, nhiều nhân vật',badge:'HOT'},
+{id:4,name:'Acc Free Fire Tân Thủ',cat:'freefire',icon:'💥',price:50000,rating:4.5,desc:'Acc new, 10 skin, thích hợp chơi mới',badge:''},
+{id:5,name:'Acc PUBG Mobile Ace',cat:'pubg',icon:'🎯',price:320000,rating:4.9,desc:'Rank Ace, 30 skin súng, full map',badge:'HOT'},
+{id:6,name:'Acc PUBG Mobile Crown',cat:'pubg',icon:'🔫',price:150000,rating:4.6,desc:'Rank Crown, 15 skin, nhiều item',badge:''},
+{id:7,name:'Acc Genshin AR55',cat:'genshin',icon:'🌟',price:500000,rating:5.0,desc:'AR55, 8 nhân vật 5 sao, nhiều vũ khí',badge:'VIP'},
+{id:8,name:'Acc Genshin AR45',cat:'genshin',icon:'✨',price:280000,rating:4.8,desc:'AR45, 4 nhân vật 5 sao, đầy đủ nguyên liệu',badge:''}
+];
+let cart=JSON.parse(localStorage.getItem('accshop_cart'))||[];
+let currentFilter='all',currentSort='default',searchQuery='';
+const grid=document.getElementById('productGrid'),emptyState=document.getElementById('emptyState'),cartDrawer=document.getElementById('cartDrawer'),cartOverlay=document.getElementById('cartOverlay'),cartItemsEl=document.getElementById('cartItems'),cartTotalEl=document.getElementById('cartTotal'),cartCountEl=document.getElementById('cartCount'),toastEl=document.getElementById('toast');
+const formatPrice=p=>p.toLocaleString('vi-VN')+'đ';
+function renderProducts(){
+let list=products.filter(p=>currentFilter==='all'||p.cat===currentFilter);
+if(searchQuery)list=list.filter(p=>p.name.toLowerCase().includes(searchQuery.toLowerCase()));
+if(currentSort==='price-asc')list.sort((a,b)=>a.price-b.price);
+if(currentSort==='price-desc')list.sort((a,b)=>b.price-a.price);
+if(currentSort==='rating')list.sort((a,b)=>b.rating-a.rating);
+if(list.length===0){grid.innerHTML='';emptyState.style.display='block';return}
+emptyState.style.display='none';
+grid.innerHTML=list.map(p=>`
+<div class="product-card">
+<div class="product-img">${p.badge?`<span class="badge ${p.badge==='HOT'?'hot':''}">${p.badge}</span>`:''}${p.icon}</div>
+<div class="product-body">
+<h3 class="product-name">${p.name}</h3>
+<p class="product-desc">${p.desc}</p>
+<div class="product-meta"><span class="product-rating">⭐ ${p.rating}</span><span class="product-price">${formatPrice(p.price)}</span></div>
+<button class="btn-buy" data-id="${p.id}">Thêm vào giỏ</button>
+</div></div>`).join('');
+grid.querySelectorAll('.btn-buy').forEach(btn=>btn.addEventListener('click',()=>addToCart(Number(btn.dataset.id))));
+}
+function addToCart(id){
+const product=products.find(p=>p.id===id);if(!product)return;
+const existing=cart.find(item=>item.id===id);
+if(existing)existing.qty+=1;else cart.push({id,name:product.name,price:product.price,icon:product.icon,qty:1});
+saveCart();renderCart();showToast(`✅ Đã thêm "${product.name}" vào giỏ`);
+}
+function removeFromCart(id){cart=cart.filter(item=>item.id!==id);saveCart();renderCart()}
+function saveCart(){localStorage.setItem('accshop_cart',JSON.stringify(cart))}
+function renderCart(){
+const totalQty=cart.reduce((s,i)=>s+i.qty,0);cartCountEl.textContent=totalQty;
+if(cart.length===0){cartItemsEl.innerHTML='<div class="cart-empty">🛒 Giỏ hàng trống</div>';cartTotalEl.textContent='0đ';return}
+cartItemsEl.innerHTML=cart.map(item=>`
+<div class="cart-item"><div class="cart-item-icon">${item.icon}</div>
+<div class="cart-item-info"><h4>${item.name}</h4><span>${formatPrice(item.price)} × ${item.qty}</span></div>
+<button class="cart-item-remove" data-id="${item.id}">✕</button></div>`).join('');
+cartItemsEl.querySelectorAll('.cart-item-remove').forEach(btn=>btn.addEventListener('click',()=>removeFromCart(Number(btn.dataset.id))));
+const total=cart.reduce((s,i)=>s+i.price*i.qty,0);cartTotalEl.textContent=formatPrice(total);
+}
+function openCart(){cartDrawer.classList.add('show');cartOverlay.classList.add('show')}
+function closeCart(){cartDrawer.classList.remove('show');cartOverlay.classList.remove('show')}
+let toastTimer;
+function showToast(msg){toastEl.textContent=msg;toastEl.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toastEl.classList.remove('show'),2200)}
+function checkout(){
+if(cart.length===0){showToast('⚠️ Giỏ hàng đang trống');return}
+const total=cart.reduce((s,i)=>s+i.price*i.qty,0);
+const ok=confirm(`Xác nhận thanh toán ${formatPrice(total)}?\n\n(Đây là demo - không có giao dịch thật)`);
+if(ok){cart=[];saveCart();renderCart();closeCart();showToast('🎉 Thanh toán thành công! Acc sẽ được gửi qua email.')}
+}
+document.getElementById('cartBtn').addEventListener('click',openCart);
+document.getElementById('closeCart').addEventListener('click',closeCart);
+cartOverlay.addEventListener('click',closeCart);
+document.getElementById('checkoutBtn').addEventListener('click',checkout);
+document.querySelectorAll('.filter-btn').forEach(btn=>{btn.addEventListener('click',()=>{document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');currentFilter=btn.dataset.cat;renderProducts()})});
+document.getElementById('sortSelect').addEventListener('change',e=>{currentSort=e.target.value;renderProducts()});
+document.getElementById('searchInput').addEventListener('input',e=>{searchQuery=e.target.value;renderProducts()});
+renderProducts();renderCart();
+</script>
+</body>
+</html>
